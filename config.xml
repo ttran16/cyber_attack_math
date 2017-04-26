@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="edu.coastline.bdats" version="0.0.95" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Cyber Attack</name>
+<widget id="edu.coastline.bdats" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Cyber Attack - Math</name>
     <description>
-        Cyber Security themed College Entrance Exam Preparation app
+        Cyber Security themed College Entrance Exam Preparation app - Math version
     </description>
-    <author email="dthompson@coastline.edu" href="http://phonegap.com">
+    <author email="dthompson@coastline.edu" href="http://apps.coastline.edu/games">
         BDATS
     </author>
     <content src="index.html" />
