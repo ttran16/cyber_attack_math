@@ -2,7 +2,7 @@
 <widget id="edu.coastline.bdats" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Cyber Attack - Math</name>
     <description>
-        Cyber Security themed College Entrance Exam Preparation app - Math version
+        Cyber Security themed College Entrance Exam Preparation app - Math Version
     </description>
     <author email="dthompson@coastline.edu" href="http://apps.coastline.edu/games">
         BDATS
@@ -11,10 +11,22 @@
     <access origin="*" />
 	<preference name="orientation" value="landscape"/>
 	<preference name="AllowInlineMediaPlayback" value="true"/>  
-	<icon src="icon.png" />
 	
-	<icon src="res/icon/android/icon-36-ldpi.png" platform="android" qualifier="ldpi" />
-	<icon src="res/icon/android/icon-48-mdpi.png" platform="android" qualifier="mdpi" />
-	<icon src="res/icon/android/icon-72-hdpi.png" platform="android" qualifier="hdpi" />
-	<icon src="res/icon/android/icon-96-xhdpi.png" platform="android" qualifier="xhdpi" />
+	<preference name="SplashScreenDelay" value="10000" />
+
+	<icon src="icon.png" />	
+	<splash src="splash.png" />
+	<platform name="android">
+		<icon src="res/icon/android/icon-36-ldpi.png" qualifier="ldpi" />
+		<icon src="res/icon/android/icon-48-mdpi.png" qualifier="mdpi" />
+		<icon src="res/icon/android/icon-72-hdpi.png" qualifier="hdpi" />
+		<icon src="res/icon/android/icon-96-xhdpi.png" qualifier="xhdpi" />
+		
+		<splash src="res/splash/android/splash-ldpi.png" qualifier="ldpi" />
+		<splash src="res/splash/android/splash-mdpi.png" qualifier="mdpi" />
+		<splash src="res/splash/android/splash-hdpi.png" qualifier="hdpi" />
+		<splash src="res/splash/android/splash-xhdpi.png" qualifier="xhdpi" />
+		<splash src="res/splash/android/splash-xxhdpi.png" qualifier="xxhdpi" />
+		<splash src="res/splash/android/splash-xxxhdpi.png" qualifier="xxxhdpi" />
+	</platform>
 </widget>
