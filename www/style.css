@@ -1,0 +1,36 @@
+html {margin:0px; padding:0px;}
+body {margin:0px; padding:0px;}
+
+#gameContainer {
+    margin: 0;
+    position: absolute;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    max-height: 100%;
+    background-color: rgb(0, 0, 0);
+}
+
+@font-face {	font-family: 'Michroma';	src: url('fonts/Michroma.ttf') format('truetype');}
+
+.
+loading {
+	-webkit-animation:spin 2s linear infinite;
+	-moz-animation:spin 2s linear infinite;
+	animation:spin 2s linear infinite;
+}
+@-moz-keyframes spin { 100% { 
+	-moz-transform:rotate(360deg); 
+	}
+}
+@-webkit-keyframes spin { 100% { 
+	-webkit-transform:rotate(360deg); 
+	}
+}
+@keyframes spin { 100% {
+	-webkit-transform:rotate(360deg);
+	transform:rotate(360deg);
+	}
+}
+
