@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="edu.coastline.cyberattack.math" version="0.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="edu.coastline.cyberattack.math" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Cyber Attack - Math</name>
     <description>
         Cyber Security themed College Entrance Exam Preparation app - Math Version
@@ -9,14 +9,29 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+	
+	<allow-intent href="http://*/*" />
+	<allow-intent href="https://*/*" />
+	<allow-intent href="tel:*" />
+	<allow-intent href="sms:*" />
+	<allow-intent href="mailto:*" />
+	<allow-intent href="geo:*" />
+
+	<platform name="ios">
+		<allow-intent href="itms:*" />
+		<allow-intent href="itms-apps:*" />
+	</platform>
+
 	<preference name="orientation" value="landscape"/>
 	<preference name="AllowInlineMediaPlayback" value="true"/>  
+	<preference name="setMediaPlaybackRequiresUserGesture" value="false"/>
 	<preference name="exit-on-suspend" value="true" />
 	<preference name="SplashScreenDelay" value="10000" />
 
 	<icon src="icon.png" />	
 	<splash src="splash.png" />
 	<platform name="android">
+		<allow-intent href="market:*" />
 		<icon src="res/icon/android/icon-36-ldpi.png" qualifier="ldpi" />
 		<icon src="res/icon/android/icon-48-mdpi.png" qualifier="mdpi" />
 		<icon src="res/icon/android/icon-72-hdpi.png" qualifier="hdpi" />
