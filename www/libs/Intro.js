@@ -3,8 +3,9 @@ PhaserGame.Intro = function (game) {
 
 
 PhaserGame.Intro.prototype = {
-    
+	
     create: function () {
+        console.log('intro');
         //this.startBG;
         this.index = 0;
         this.textTimer;
@@ -29,15 +30,12 @@ PhaserGame.Intro.prototype = {
         //startBG.inputEnabled = true;
         //startBG.events.onInputDown.addOnce(this.startGame,this);
         
-        music = this.add.audio('MUSIC-Intro');
-        music.play();
-                
+		
         titleVideo = this.game.add.video('BG-TitleVideo');
         titleVideo.addToWorld(0, 0, 0, 0, this.game.width/this.game.game_config.intro_video.width, this.game.height/this.game.game_config.intro_video.height);
-        
-        titleScreen = this.add.sprite(0, 0, 'BG-MainMenu');
-		titleVideo.unlock();
-        titleVideo.play();
+        titleVideo.unlock();
+		
+        titleScreen = this.add.sprite(0, 0, 'BG-MainMenu');		
 		titleScreen.width=this.game.width;
 		titleScreen.height=this.game.height;
 		
@@ -51,7 +49,7 @@ PhaserGame.Intro.prototype = {
 		blackScreen.height=this.game.height;
 		
 		
-        this.text = this.game.add.text(32, 600, 'aaaaaaa', { font: "25pt Michroma", fill: "#ffffff", stroke: "#000000", strokeThickness: 1 });
+        this.text = this.game.add.text(32, 600, '', { font: "25pt Michroma", fill: "#ffffff", stroke: "#000000", strokeThickness: 1 });
         this.text.setShadow(3, 3, 'rgba(0,0,0,1)', 7);
         this.nextLine();
         
@@ -59,7 +57,6 @@ PhaserGame.Intro.prototype = {
         
         
         this.game.time.events.add(23000, this.startGame, this);
-        
     },
     
     updateLine: function () {
@@ -89,12 +86,6 @@ PhaserGame.Intro.prototype = {
         };
 
     },
-    
-	pauseUpdate: function () {
-		console.log('pauseUpdate');
-		music.volume = 0.0;
-    },
-    
     startGame: function(pointer) {
 		titleVideo.destroy();
         this.game.state.start('MainMenu');

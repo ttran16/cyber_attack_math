@@ -1,6 +1,6 @@
 PhaserGame.LevelPlay = function (game) {
-	this.Questions = new PhaserGame.LevelPlay.Questions(this);
-	this.Hubs = new PhaserGame.LevelPlay.Hubs(this);
+	this.Questions = new Questions(this);
+	this.Hubs = new Hubs(this);
 }
 PhaserGame.LevelPlay.prototype = {
         
@@ -11,10 +11,10 @@ PhaserGame.LevelPlay.prototype = {
         // Begin Level Music
 		
 		
-        music.destroy();      
-        music = this.add.audio('MUSIC-Level1');
-        music.volume = .5;
-        music.play();
+        this.game.music.destroy();      
+        this.game.music = this.add.audio('MUSIC-Level1');
+        this.game.music.volume = .5;
+        this.game.music.play();
         
         // Setup Sound EFX
         soundSelect = this.add.audio('SOUND-Select');
@@ -29,6 +29,7 @@ PhaserGame.LevelPlay.prototype = {
         soundEarnedPowerUp = this.add.audio('SOUND-EarnedPowerUp');
         sound5050 = this.add.audio('SOUND-5050');
         
+
         // SET THE GAME STATES
         this.game.PAUSED = false;
         this.game.STATE = 'PLAY';
@@ -39,8 +40,9 @@ PhaserGame.LevelPlay.prototype = {
 		this.Hubs.Init();
         this.Questions.Init();
         this.buildGroup_Bonus();
-		
-		
+
+		this.game.ticking=false;
+		this.flashtimer = 0;
         
         // START THE PHYSICS ENGINE
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -76,7 +78,7 @@ PhaserGame.LevelPlay.prototype = {
     buildWorld: function () {
         // Add background & level map
         this.game.SCREEN_LevelBackground = this.game.add.sprite(0, 0, 'BG-Level');
-		
+
 		
 		
 		this.game.SCREEN_LevelBackground.width=this.game.width;
@@ -100,7 +102,18 @@ PhaserGame.LevelPlay.prototype = {
     // UI GROUP
     buildGroup_UI: function () {
         // ADD UI BUTTONS AND ACTIONS
-        
+		this.game.TIMER_BG = this.game.add.sprite(this.game.width/2, 745, 'TIMER-BG');
+		this.game.TIMER_BG.anchor.set(0.5, 0.5);
+		
+		this.timerTextMinutes = this.add.text(this.game.width/2 - 10, 745, '00' , { font: "20pt Droid", fill: "#00ff00", align: "left", wordWrap: true, wordWrapWidth: 460 });
+        this.timerTextMinutes.anchor.set(1, 0.5);
+		
+		this.timerTextSeparator = this.add.text(this.game.width/2, 745, ':' , { font: "20pt Droid", fill: "#00ff00", align: "left", wordWrap: true, wordWrapWidth: 460 });
+        this.timerTextSeparator.anchor.set(0.5, 0.5);
+		
+		this.timerTextSeconds = this.add.text(this.game.width/2 + 10, 745, '00' , { font: "20pt Droid", fill: "#00ff00", align: "left", wordWrap: true, wordWrapWidth: 460 });
+        this.timerTextSeconds.anchor.set(0, 0.5);
+		
         this.game.ICON_Restore = this.game.add.sprite(950, 718, 'ICON-Restore-Off');
         this.game.ICON_Restore.inputEnabled = true;
                 
@@ -123,6 +136,8 @@ PhaserGame.LevelPlay.prototype = {
     
     refresh_UI: function () {    
         
+		
+
         // 5050 AVAILABLE DURING QUESTION
         if (this.game.POWERUP_5050 >= 1 && this.game.STATE == 'QUESTION'){
             this.game.ICON_5050.loadTexture('ICON-5050-On',0);
@@ -202,6 +217,7 @@ PhaserGame.LevelPlay.prototype = {
     
     // LEVEL SUCCESS
     levelSuccess: function () {
+		this.game.ticking=false;
         // SET TIMER FOR NEXT MISSILE TO NOW + 999999
         this.game.DATA_MissileFire_Timer = this.game.time.now + 999999;
         
@@ -216,6 +232,8 @@ PhaserGame.LevelPlay.prototype = {
     
     // LEVEL FAILED
     levelFailure: function () {
+		
+		this.game.ticking=false;
         // SET TIMER FOR NEXT MISSILE TO NOW + 999999
         this.game.DATA_MissileFire_Timer = this.game.time.now + 999999;
         
@@ -238,6 +256,7 @@ PhaserGame.LevelPlay.prototype = {
     
     powerUpEarned: function (VAR1) {
         // PAUSE GAME STATE
+		this.game.ticking=false;
         this.game.PAUSED = true;
         this.game.STATE = 'POWERUP';
         
@@ -256,14 +275,29 @@ PhaserGame.LevelPlay.prototype = {
         };
         
         if (bonus == '5050') {
+			this.game.Director.stopTalking();
+			this.game.Director.enqueue('bonusnicejob');			
+			this.game.Director.enqueue('bonus5050');
+			this.game.Director.startTalking();
+			
             this.game.SPRITE_BonusPopup.loadTexture("BONUS-5050");
             this.game.POWERUP_5050++;
         };
         if (bonus == 'Attack') {
+			this.game.Director.stopTalking();
+			this.game.Director.enqueue('bonusnicejob');			
+			this.game.Director.enqueue('bonusattack');
+			this.game.Director.startTalking();
+			
             this.game.SPRITE_BonusPopup.loadTexture("BONUS-Attack");
             this.game.POWERUP_Attack++;
         };
         if (bonus == 'Restore') {
+			this.game.Director.stopTalking();
+			this.game.Director.enqueue('bonusnicejob');			
+			this.game.Director.enqueue('bonuspowerup');
+			this.game.Director.startTalking();
+			
             this.game.SPRITE_BonusPopup.loadTexture("BONUS-Restore");
             this.game.POWERUP_Restore++;
         };
@@ -285,22 +319,25 @@ PhaserGame.LevelPlay.prototype = {
         this.game.SPRITE_BonusOverlay.inputEnabled = false;
         this.game.SPRITE_BonusPopup.inputEnabled = false;
         
+		this.game.Director.stopTalking();
+		
         // RETURN TO PLAY
         this.game.add.tween(this.game.GROUP_Bonus).to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
         this.game.PAUSED = false;
+		this.game.ticking=true;
         this.game.STATE = 'PLAY';
         this.refresh_UI();
     },
     
     powerUp_Attack: function () {
         // TAKE THE HIGHEST POWER ATTACK HUB OFFLINE
-        //var x = this.locateLeastDamagedHub();
-		this.game.AttackHubs[this.Hubs.locateLeastDamagedHub()].damage = 0;
-        this.Hubs.setDamage(this.Hubs.locateLeastDamagedHub(),0);
+
+		this.game.AttackHubs[this.Hubs.strongestHub()].damage = 0;
+        this.Hubs.setDamage(this.Hubs.strongestHub(),0);
         
         // EXPLOSION ON ATTACKING HUB
 		
-		var atkhub = this.game.AttackHubs[this.Hubs.locateLeastDamagedHub()];
+		var atkhub = this.game.AttackHubs[this.Hubs.strongestHub()];
         
         this.game.GROUP_Explosion.alpha = 1;
         this.game.SPRITE_Explosion.reset(atkhub.x, atkhub.y);
@@ -453,9 +490,40 @@ PhaserGame.LevelPlay.prototype = {
         
     update: function () {
         // TESTING - Least Damnaged HUB
-        //this.LeastDamagedHub = this.locateLeastDamagedHub();
 		//should only check when needed, not on update
-        
+        if(this.game.ticking==true)
+		{
+			
+			if(isNaN(this.game.timetracker))
+			{
+				console.log('timetracker was undefined');
+				this.game.timetracker=0;
+			}
+			this.game.timetracker+=this.game.time.elapsedMS;
+			
+			this.timerTextSeconds.visible=true;
+			this.timerTextMinutes.visible=true;
+			this.timerTextSeconds.setText(this.game.Functions.getFormatedSeconds(this.game.timetracker /1000));
+			this.timerTextMinutes.setText(this.game.Functions.getFormatedMinutes(this.game.timetracker /1000));
+	
+		}
+		else
+		{
+				
+			this.flashtimer += this.game.time.elapsed; //this is in ms, not seconds.    
+			if ( this.flashtimer >= 1000 )    
+			{        
+				this.flashtimer -= 1000;        
+				this.timerTextSeconds.visible = !this.timerTextSeconds.visible;    
+				this.timerTextMinutes.visible = !this.timerTextMinutes.visible;    
+				
+			}
+			
+		}
+
+		this.timerTextSeconds.setText(this.game.Functions.getFormatedSeconds(this.game.timetracker /1000));
+		this.timerTextMinutes.setText(this.game.Functions.getFormatedMinutes(this.game.timetracker /1000));
+		
         // MONITOR THE MISSILEFIRE TIMER AND FIRE IF EXCEEDED
         if (this.game.PAUSED == false){
             if (this.game.time.now > this.game.DATA_MissileFire_Timer) {            

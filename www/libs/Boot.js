@@ -13,7 +13,7 @@ PhaserGame.Boot.prototype = {
 
         //  Phaser will automatically pause if the browser tab the game is in loses focus. You can disable that here:
         this.stage.disableVisibilityChange = true;
-
+		
         if (this.game.device.desktop)
         {
             //  If you have any desktop specific settings, they can go in here
@@ -34,16 +34,23 @@ PhaserGame.Boot.prototype = {
     preload: function () {
 
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
-        this.load.image('preloaderBackground', 'assets/BG-Default.jpg');
-        this.load.image('preloaderForeground', 'assets/BG-Loading.png');
-        this.load.image('preloaderProgress', 'assets/BG-Loading-Progress.png');
+        
+        this.load.image('BG-MainMenu','assets/GFX/BG-Intro.jpg');
+		this.load.image('preloaderBackground', 'assets/GFX/BG-Default.jpg');
+        this.load.image('preloaderForeground', 'assets/GFX/BG-Loading.png');
+        this.load.image('preloaderProgress', 'assets/GFX/BG-Loading-Progress.png');
+        this.Michroma_preloader = this.add.text(0, 0, '', { font: "32pt Michroma", fill: "#000000"});
+		
+        this.Droid_preloader = this.add.text(0, 0, '', { font: "32pt Droid", fill: "#000000"});
 		
     },
 
     create: function () {
 		
+        var Michroma_preloader = this.add.text(0, 0, '', { font: "32pt Michroma", fill: "#000000"});
 		
-		
+        var Droid_preloader = this.add.text(0, 0, '', { font: "32pt Droid", fill: "#000000"});
+
 		//make stage scale with view port
 		this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 		this.scale.minWidth = this.scale.gameWidth;
