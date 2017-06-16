@@ -31,8 +31,8 @@ Config = function () {
 	this['main_menu_bg_video']['height'] = 480;
 	
 	this['highscore'] = {};
-	this['highscore']['get'] = 'https://apps.coastline.edu/games/Cyberwar-Math/data/highscore.txt';
-	this['highscore']['set'] = 'https://apps.coastline.edu/games/Cyberwar-Math/data/highscore.cfm?name=%%NAME%%&time=%%TIME%%';
-	
+	//this['highscore']['get'] = 'https://apps.coastline.edu/games/Cyberwar-Math/data/highscore.txt';
+	//this['highscore']['set'] = 'https://apps.coastline.edu/games/Cyberwar-Math/data/highscore.cfm?name=%%NAME%%&time=%%TIME%%';
+
 	
 };
